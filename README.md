@@ -812,4 +812,4 @@ Layout:
 ## Authors
 
 * **Meriem Matnoussi**
-* **Mohamed elghafiani**
+* **Mohamed El Ghafiani**
