@@ -82,9 +82,7 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances based or
         not on the class name.
         Ex:
-        $ all BaseModel
-        or
-        $ all.
+        $ all BaseModel or $ all.
         """
         all_objs = storage.all()
         if not line:
