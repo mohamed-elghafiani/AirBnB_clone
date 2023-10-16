@@ -23,6 +23,16 @@ class HBNBCommand(cmd.Cmd):
             patern = r'(\w+).(\w+)\(\)'
             class_name, method_name = re.match(patern, line).groups()
             return self.onecmd("all {}".format(class_name))
+       
+        if ".count" in line:
+            patern = r'(\w+).(\w+)\(\)'
+            class_name, _ = re.match(patern, line).groups()
+            all_objs = storage.all()
+            count = 0
+            for key, obj in all_objs.items():
+                if key.split(".")[0] == class_name:
+                    count += 1
+            print(count)
 
         if ".show" in line:
             patern = r'(\w+).(\w+)\("(.+)"\)'
