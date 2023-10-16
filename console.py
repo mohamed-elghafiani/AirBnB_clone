@@ -34,10 +34,10 @@ class HBNBCommand(cmd.Cmd):
                     count += 1
             print(count)
 
-        if ".show" in line:
+        if ".show" in line or ".destroy" in line:
             patern = r'(\w+).(\w+)\("(.+)"\)'
-            class_name, _, id = re.match(patern, line).groups()
-            self.onecmd("show {} {}".format(class_name, id))
+            class_name, method_name, id = re.match(patern, line).groups()
+            self.onecmd("{} {} {}".format(method_name, class_name, id))
 
     def do_exit(self, line):
         """Quit command to exit the console"""
