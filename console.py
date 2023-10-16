@@ -46,6 +46,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         if args[0] not in classes:
             print("** class doesn't exist **")
+            return
         elif len(args) < 2:
             print("** instance id missing **")
             return
@@ -89,12 +90,12 @@ class HBNBCommand(cmd.Cmd):
             print([str(obj) for obj in all_objs.values()])
         else:
             try:
-                arg_cls = eval(line)
+                arg_cls = eval(line.strip())()
                 filtered_objs = []
-                for key, obj in all_objs.keys():
-                    if key.split(".")[0] == line:
-                        filtered_obj.append(str(obj))
-                print(filtered_obj)
+                for key, obj in all_objs.items():
+                    if key.split(".")[0] == line.strip():
+                        filtered_objs.append(str(obj))
+                print(filtered_objs)
             except NameError:
                 print("** class doesn't exist **")
 
@@ -106,10 +107,12 @@ class HBNBCommand(cmd.Cmd):
         """
         if not line:
             print("** class name missing **")
+            return
 
         args = line.split()
         if args[0] not in classes:
             print("** class doesn't exist **")
+            return
         elif len(args) < 2:
             print("** instance id missing **")
         else:
