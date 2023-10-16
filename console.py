@@ -23,8 +23,8 @@ class HBNBCommand(cmd.Cmd):
             patern = r'(\w+).(\w+)\(\)'
             class_name, method_name = re.match(patern, line).groups()
             return self.onecmd("all {}".format(class_name))
-       
-        if ".count" in line:
+
+        elif ".count" in line:
             patern = r'(\w+).(\w+)\(\)'
             class_name, _ = re.match(patern, line).groups()
             all_objs = storage.all()
@@ -34,10 +34,21 @@ class HBNBCommand(cmd.Cmd):
                     count += 1
             print(count)
 
-        if ".show" in line or ".destroy" in line:
+        elif ".show" in line or ".destroy" in line:
             patern = r'(\w+).(\w+)\("(.+)"\)'
             class_name, method_name, id = re.match(patern, line).groups()
             self.onecmd("{} {} {}".format(method_name, class_name, id))
+
+        elif ".update" in line:
+            try:
+                patern = r'(\w+)\.update\("(.+)",\s?"(\w+)",\s?"?(.+)"?\)'
+                args = re.match(patern, line).groups()
+                return self.onecmd(
+                        "update {} {} {} {}".format(*args))
+            except AttributeError:
+                print("\n".join(["[ERROR] Try Again",
+                      " ".join(["USAGE: <class name>.update(<id>,",
+                                "<attribute name>, <attribute value>)"])]))
 
     def do_exit(self, line):
         """Quit command to exit the console"""
