@@ -20,7 +20,14 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         if ".all" in line:
-            return self.do_call_all(line)
+            patern = r'(\w+).(\w+)\(\)'
+            class_name, method_name = re.match(patern, line).groups()
+            return self.onecmd("all {}".format(class_name))
+
+        if ".show" in line:
+            patern = r'(\w+).(\w+)\("(.+)"\)'
+            class_name, _, id = re.match(patern, line).groups()
+            self.onecmd("show {} {}".format(class_name, id))
 
     def do_exit(self, line):
         """Quit command to exit the console"""
@@ -142,18 +149,6 @@ class HBNBCommand(cmd.Cmd):
                 attr_value = args[3]
                 setattr(obj, attr_name, attr_value)
                 obj.save()
-
-    def do_call_all(self, line):
-        pattern = r"(\w+)\.(\w+)\(\)"
-        match = re.match(pattern, line)
-        if match:
-            class_name, method_name = match.groups()
-            instance = eval(class_name)()
-            if instance:
-                if method_name == "all":
-                    return self.onecmd("all {}".format(class_name))
-        else:
-            print("*** Unknown command")
 
 
 if __name__ == '__main__':
