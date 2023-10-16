@@ -9,6 +9,7 @@ from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
+import re
 
 classes = ["BaseModel", "User", "State", "City", "Place", "Amenity", "Review"]
 
@@ -16,6 +17,10 @@ classes = ["BaseModel", "User", "State", "City", "Place", "Amenity", "Review"]
 class HBNBCommand(cmd.Cmd):
     """Project Console class"""
     prompt = "(hbnb) "
+
+    def default(self, line):
+        if ".all" in line:
+            return self.do_call_all(line)
 
     def do_exit(self, line):
         """Quit command to exit the console"""
@@ -137,6 +142,18 @@ class HBNBCommand(cmd.Cmd):
                 attr_value = args[3]
                 setattr(obj, attr_name, attr_value)
                 obj.save()
+
+    def do_call_all(self, line):
+        pattern = r"(\w+)\.(\w+)\(\)"
+        match = re.match(pattern, line)
+        if match:
+            class_name, method_name = match.groups()
+            instance = eval(class_name)()
+            if instance:
+                if method_name == "all":
+                    return self.onecmd("all {}".format(class_name))
+        else:
+            print("*** Unknown command")
 
 
 if __name__ == '__main__':
