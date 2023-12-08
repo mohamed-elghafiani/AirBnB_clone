@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ -e $file  ]
+then
+    echo exists
+fi
+
+touch file1
+
+if [ -f file2  ]
+then
+    echo exists file2
+else
+    echo doesn\'t exists file2
+fi
